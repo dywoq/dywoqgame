@@ -159,7 +159,7 @@ export declare interface ReflectObjectCall {
 	call(method: string, ...args: any[]): any
 }
 
-export declare interface ReflectObject extends ReflectObjectKind, ReflectObjectProperties { }
+export declare interface ReflectObject extends ReflectObjectKind, ReflectObjectProperties, ReflectObjectCall { }
 
 /** Creates and returns new reflect object with the given value. */
 export declare function createReflectObject(value: any): ReflectObject
