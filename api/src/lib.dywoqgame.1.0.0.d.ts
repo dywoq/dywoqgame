@@ -65,6 +65,14 @@ export declare interface ConsoleStreams {
 	debug: ConsoleStream
 }
 
+export declare interface ConsoleStreamPeek {
+	/** 
+	 * peek returns the latest message in the given count.
+	 * May return a error.
+	 */
+	peek(stream: ConsoleStreamType, count?: number): { got: any[], error: Error }
+}
+
 export declare interface ConsoleStreamsWriting {
 	/**
 	 * Writes the arguments to the chosen stream.
@@ -84,5 +92,6 @@ export declare interface ConsoleStreamsWriting {
 
 export declare let ConsoleStreams: ConsoleStreams
 export declare let ConsoleStreamsWriting: ConsoleStreamsWriting
+export declare let ConsoleStreamPeek: ConsoleStreamPeek;
 
 //#endregion
