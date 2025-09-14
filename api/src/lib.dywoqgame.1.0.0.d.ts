@@ -18,4 +18,5 @@ export declare interface Error {
 	/** Resets the error, setting the message to an empty string. */
 	reset(): void
 }
-
+/** Creates and returns new Error instance, with message.  */
+export function createError(message?: string): Error
