@@ -126,3 +126,63 @@ export declare let ConversionNumber: ConversionNumber;
 export declare let ConversionBoolean: ConversionNumber;
 export declare let ConversionArray: ConversionArray;
 //#endregion
+
+//#region reflect
+export type ReflectKind =
+	"number" |
+	"string" |
+	"boolean" |
+	"array" |
+	"object" |
+	"function" |
+	"undefined" |
+	"null"
+
+export declare interface ReflectObjectKind {
+	/** Returns the kind of object. */
+	kind(): ReflectKind
+}
+
+export declare interface ReflectObjectProperties {
+	/** Returns the properties of object. */
+	properties(): string[]
+	/** Reports whether the object has property. */
+	hasProperty(property: string): boolean
+	/** Returns the property if exists. */
+	get(property: string): any
+	/** Sets the property if exists. */
+	set(key: string, value: any): void
+}
+
+export declare interface ReflectObjectCall {
+	/** Calls the function/method of the object dynamically with the given arguments. */
+	call(method: string, ...args: any[]): any
+}
+
+export declare interface ReflectObject extends ReflectObjectKind, ReflectObjectProperties { }
+
+/** Creates and returns new reflect object with the given value. */
+export declare function createReflectObject(value: any): ReflectObject
+
+export declare interface ReflectChecks {
+	/** Reports whether the value is number. */
+	isNumber(value: any): boolean
+	/** Reports whether the value is string. */
+	isString(value: any): boolean
+	/** Reports whether the value is boolean. */
+	isBoolean(value: any): boolean
+	/** Reports whether the value is array. */
+	isArray(value: any): boolean
+	/** Reports whether the value is object. */
+	isObject(value: any): boolean
+	/** Reports whether the value is function. */
+	isFunction(value: any): boolean
+	/** Reports whether the value is undefined. */
+	isUndefined(value: any): boolean
+	/** Reports whether the value is null. */
+	isNull(value: any): boolean
+	/** Reports whether the value is primitive. */
+	isPrimitive(value: any): boolean;
+}
+export declare let ReflectChecks: ReflectChecks;
+//#endregion
