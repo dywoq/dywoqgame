@@ -186,3 +186,35 @@ export declare interface ReflectChecks {
 }
 export declare let ReflectChecks: ReflectChecks;
 //#endregion
+
+//#region iterating
+export declare interface IteratorBase<T> {
+	/** Returns any error encountered during iteration. */
+	error(): Error
+	/** Returns the current position. */
+	position(): number
+	/** Returns the current element. */
+	value(): T
+	/** Advances the iterator to the next element and returns true if there is a next element. */
+	next(): boolean
+	/** Resets the iterator to its initial state. */
+	reset(): void
+	/** Returns the current length of the slice. */
+	length(): number
+	/** Returns the current array. */
+	data(): T[]
+}
+export declare interface IteratorForward<T> extends IteratorBase<T> { }
+export declare interface IteratorReverse<T> extends IteratorBase<T> { }
+
+export declare let IteratorForward: { new <T>(data: T[]): IteratorForward<T> }
+export declare let IteratorReverse: { new <T>(data: T[]): IteratorReverse<T> }
+
+export declare interface IteratorMethod<T> {
+	iterator: {
+		forward(): IteratorForward<T>
+		reverse(): IteratorReverse<T>
+	}
+}
+
+//#endregion 
