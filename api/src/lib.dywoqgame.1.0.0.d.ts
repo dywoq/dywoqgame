@@ -99,9 +99,8 @@ export declare interface ConsoleStreamsWriting {
 	writeln(stream: ConsoleStreamType, ...args?: any[]): Error
 }
 
-export declare let ConsoleStreams: ConsoleStreams
-export declare let ConsoleStreamsWriting: ConsoleStreamsWriting
-export declare let ConsoleStreamsPeek: ConsoleStreamsPeek;
+export declare let console: ConsoleStreamsPeek & ConsoleStreamsWriting & ConsoleStreams;
+
 //#endregion
 
 //#region type conversions / casting
@@ -121,10 +120,17 @@ export declare interface ConversionBoolean {
 export declare interface ConversionArray {
 	toString<T>(a: T[]): { result: string, error: Error }
 }
+export declare interface Conversion {
+	string: ConversionString
+	number: ConversionNumber
+	boolean: ConversionBoolean
+	array: ConversionArray
+}
 export declare let ConversionString: ConversionString;
 export declare let ConversionNumber: ConversionNumber;
 export declare let ConversionBoolean: ConversionNumber;
 export declare let ConversionArray: ConversionArray;
+export declare let conversion: Conversion;
 //#endregion
 
 //#region reflect
