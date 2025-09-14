@@ -1,15 +1,20 @@
+import { Error } from "./error"
+
 export declare namespace Console {
 	export interface Stream {
 		/**
 		 * write writes the arguments to the stream/
 		 * @param args Arguments to write
 		 */
-		write(...args: any[]): void
+		write(...args: any[]): Error
 		/**
 		 * flush clears the stream buffer and 
 		 * returns the cleared stream buffer.
 		 */
-		flush(): string[]
+		flush(): {
+			buffer: string[]
+			error: Error
+		}
 	}
 
 	export interface Streams {
@@ -42,32 +47,32 @@ export declare namespace Console {
 		 * print writes the arguments to stdout.
 		 * @param args Arguments to write
 		*/
-		print(...args: any[]): void
+		print(...args: any[]): Error
 		/**
 		 * println writes the arguments with newline to stdout.
 		 * @param args Arguments to write
 		 */
-		println(...args: any[]): void
+		println(...args: any[]): Error
 		/**
 		 * warn writes the arguments to stdwarn.
 		 * @param args Arguments to write
 		 */
-		warn(...args: any[]): void
+		warn(...args: any[]): Error
 		/**
 		 * error writes the arguments to stderr.
 		 * @param args Arguments to write
 		 */
-		error(...args: any[]): void
+		error(...args: any[]): Error
 		/**
 		 * debug writes the arguments to stddebug.
 		 * @param args Arguments to write
 		 */
-		debug(...args: any[]): void
+		debug(...args: any[]): Error
 		/**
 		 * fatal writes the arguments to stdfatal.
 		 * @param args Arguments to write
 		 */
-		fatal(...args: any[]): void
+		fatal(...args: any[]): Error
 	}
 
 	export const StreamWriting: StreamWriting;
