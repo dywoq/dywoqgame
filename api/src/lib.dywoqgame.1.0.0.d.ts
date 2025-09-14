@@ -50,7 +50,16 @@ export declare interface ConsoleStreamFlusher {
 	flush(): { flushed: any[], error: Error }
 }
 
-export declare interface ConsoleStream extends ConsoleStreamFlusher, ConsoleStreamReader, ConsoleStreamWriter { }
+export declare interface ConsoleStreamClear {
+	/**
+	 * Clears the data of stream without returning it.
+	 * May return a error.
+	 * @param stream The chosen stream.
+	 */
+	clear(stream: ConsoleStreamType): Error
+}
+
+export declare interface ConsoleStream extends ConsoleStreamFlusher, ConsoleStreamReader, ConsoleStreamWriter, ConsoleStreamClear { }
 
 export declare interface ConsoleStreams {
 	/** Stream of logs. */
@@ -65,7 +74,7 @@ export declare interface ConsoleStreams {
 	debug: ConsoleStream
 }
 
-export declare interface ConsoleStreamPeek {
+export declare interface ConsoleStreamsPeek {
 	/** 
 	 * peek returns the latest message in the given count.
 	 * May return a error.
@@ -92,6 +101,6 @@ export declare interface ConsoleStreamsWriting {
 
 export declare let ConsoleStreams: ConsoleStreams
 export declare let ConsoleStreamsWriting: ConsoleStreamsWriting
-export declare let ConsoleStreamPeek: ConsoleStreamPeek;
+export declare let ConsoleStreamsPeek: ConsoleStreamsPeek;
 
 //#endregion
