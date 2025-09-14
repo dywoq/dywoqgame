@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+		"lib": [],
+		"target": "esnext",
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"module": "commonjs",
+		"strict": true,
+	},
+	"include": [
+		"src/**/*"
+	]
+}
