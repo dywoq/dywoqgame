@@ -102,5 +102,27 @@ export declare interface ConsoleStreamsWriting {
 export declare let ConsoleStreams: ConsoleStreams
 export declare let ConsoleStreamsWriting: ConsoleStreamsWriting
 export declare let ConsoleStreamsPeek: ConsoleStreamsPeek;
+//#endregion
 
+//#region type conversions / casting
+export declare interface ConversionString {
+	toNumber(str: string): { result: number, error: Error }
+	toBoolean(str: string): { result: boolean, error: Error }
+	toUnicode(str: string): { result: string[], error: Error }
+}
+export declare interface ConversionNumber {
+	toString(num: number): { result: string, error: Error }
+	toBoolean(num: number): { result: boolean, error: Error }
+}
+export declare interface ConversionBoolean {
+	toString(b: boolean): { result: string, error: Error }
+	toNumber(b: boolean): { result: number, error: Error }
+}
+export declare interface ConversionArray {
+	toString<T>(a: T[]): { result: string, error: Error }
+}
+export declare let ConversionString: ConversionString;
+export declare let ConversionNumber: ConversionNumber;
+export declare let ConversionBoolean: ConversionNumber;
+export declare let ConversionArray: ConversionArray;
 //#endregion
