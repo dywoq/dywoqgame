@@ -17,3 +17,5 @@ declare class Symbol { }
 declare class Error { }
 
 declare interface IArguments { }
+declare interface CallableFunction { }
+declare interface NewableFunction { }
