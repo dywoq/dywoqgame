@@ -3,13 +3,15 @@ import { Error } from "./error"
 export declare namespace Console {
 	export interface Stream {
 		/**
-		 * write writes the arguments to the stream/
+		 * Writes the arguments to the stream.
 		 * @param args Arguments to write
+		 * @returns An Error object indicating whether the operation succeeded
 		 */
 		write(...args: any[]): Error
+
 		/**
-		 * flush clears the stream buffer and 
-		 * returns the cleared stream buffer.
+		 * Clears the stream buffer and returns the cleared buffer along with any error.
+		 * @returns An object containing the buffer and an Error object
 		 */
 		flush(): {
 			buffer: string[]
@@ -20,61 +22,79 @@ export declare namespace Console {
 	export interface Streams {
 		/**
 		 * Standard output stream.
-		 * Messages go to the game log buffer.
+		 * Messages are stored in the game log buffer.
 		 */
 		stdout: Stream
+
 		/**
-		 * Error stream. 
-		 * Messages go to error buffer.
+		 * Error stream.
+		 * Messages are stored in the error buffer.
 		 */
 		stderr: Stream
+
 		/**
-		 * Warn stream.
+		 * Warning stream.
+		 * Messages are stored in the warning buffer.
 		 */
 		stdwarn: Stream
+
 		/**
 		 * Debug stream.
+		 * Messages are stored in the debug buffer.
 		 */
 		stddebug: Stream
+
 		/**
-		 * Fatal errors streams.
+		 * Fatal error stream.
+		 * Messages are stored in the fatal error buffer and may stop the game.
 		 */
 		stdfatal: Stream
 	}
 
 	export interface StreamWriting {
 		/**
-		 * print writes the arguments to stdout.
+		 * Writes arguments to stdout.
 		 * @param args Arguments to write
-		*/
+		 * @returns An Error object
+		 */
 		print(...args: any[]): Error
+
 		/**
-		 * println writes the arguments with newline to stdout.
+		 * Writes arguments to stdout followed by a newline.
 		 * @param args Arguments to write
+		 * @returns An Error object
 		 */
 		println(...args: any[]): Error
+
 		/**
-		 * warn writes the arguments to stdwarn.
+		 * Writes arguments to the warning stream.
 		 * @param args Arguments to write
+		 * @returns An Error object
 		 */
 		warn(...args: any[]): Error
+
 		/**
-		 * error writes the arguments to stderr.
+		 * Writes arguments to the error stream.
 		 * @param args Arguments to write
+		 * @returns An Error object
 		 */
 		error(...args: any[]): Error
+
 		/**
-		 * debug writes the arguments to stddebug.
+		 * Writes arguments to the debug stream.
 		 * @param args Arguments to write
+		 * @returns An Error object
 		 */
 		debug(...args: any[]): Error
+
 		/**
-		 * fatal writes the arguments to stdfatal.
+		 * Writes arguments to the fatal error stream.
 		 * @param args Arguments to write
+		 * @returns An Error object
 		 */
 		fatal(...args: any[]): Error
 	}
 
-	export const StreamWriting: StreamWriting;
-	export const Streams: Streams;
+	export const StreamWriting: StreamWriting
+	export const Streams: Streams
 }
