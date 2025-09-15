@@ -52,17 +52,21 @@ func contentEntry() string {
 }
 
 func contentModuleFile(c *config.Config) string {
-	module := c.Title
-	module = strings.ReplaceAll(module, " ", "_")
-	module = strings.ReplaceAll(module, "-", "")
-	module = strings.ReplaceAll(module, ".", "")
-
+	m := module(c)
 	var b strings.Builder
-	b.WriteString(fmt.Sprintf("module %s\n", module))
+	b.WriteString(fmt.Sprintf("module %s\n", m))
 	b.WriteString("\n")
 	b.WriteString("go 1.25.0\n")
 	b.WriteString("\n")
 	return b.String()
+}
+
+func module(c *config.Config) string {
+	m := c.Title
+	m = strings.ReplaceAll(m, " ", "_")
+	m = strings.ReplaceAll(m, "-", "")
+	m = strings.ReplaceAll(m, ".", "")
+	return m
 }
 
 func file(path string, content []byte) error {

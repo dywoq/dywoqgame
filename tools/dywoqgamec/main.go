@@ -8,25 +8,22 @@ import (
 
 func main() {
 	a := args.NewArgs()
-	
 	c := &config.Config{}
-	err := c.Fill(a.Config)
-	if err != nil {
-		panic(err)
-	}
+	switch a.Command {
+	case "build":
+		err := entry.Setup(c, a)
+		if err != nil {
+			panic(err)
+		}
 
-	err = entry.Generate(c)
-	if err != nil {
-		panic(err)
-	}
-
-	err = entry.Install(c)
-	if err != nil {
-		panic(err)
-	}
-
-	err = entry.Build(c)
-	if err != nil {
-		panic(err)
+	case "run":
+		err := entry.Setup(c, a)
+		if err != nil {
+			panic(err)
+		}
+		err = entry.Run(c)
+		if err != nil {
+			panic(err)
+		}
 	}
 }
