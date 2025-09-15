@@ -4,6 +4,8 @@ import (
 	"errors"
 	"os"
 	"os/exec"
+
+	"github.com/dywoq/dywoqgame/tools/dywoqgamec/internal/config"
 )
 
 var pkgs = []string{
@@ -11,13 +13,13 @@ var pkgs = []string{
 }
 
 // Install instals any necessary packages required to build a entry program.
-func Install(dir string) error {
+func Install(c *config.Config) error {
 	if len(pkgs) == 0 {
 		return errors.New("github.com/dywoq/dywoqgame/tools/dywoqgamec/internal/entry: no packages to install")
 	}
 	for _, pkg := range pkgs {
 		cmd := exec.Command("go", "get", pkg)
-		cmd.Dir = dir
+		cmd.Dir = Dir(c)
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
 		err := cmd.Run()

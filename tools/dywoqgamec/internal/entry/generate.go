@@ -10,9 +10,9 @@ import (
 )
 
 // Generate creates a cache folder .dywoqgame, and generates files
-// inside the folder named c.Title.  
+// inside the folder named c.Title.
 func Generate(c *config.Config) error {
-	dir := fmt.Sprintf(".dywoqgame/%s", c.Title)
+	dir := Dir(c)
 	err := os.MkdirAll(dir, 0755)
 	if err != nil {
 		return err
