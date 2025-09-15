@@ -1,6 +1,9 @@
 package core
 
-import "github.com/hajimehoshi/ebiten/v2"
+import (
+	"github.com/dywoq/dywoqlib/err"
+	"github.com/hajimehoshi/ebiten/v2"
+)
 
 type Game struct {
 	Window *Window
@@ -10,9 +13,13 @@ func NewGame() *Game {
 	return &Game{}
 }
 
-func (g *Game) Loop() error {
+func (g *Game) Loop() err.Context {
 	e := ebitenGameWrapper{g}
-	return ebiten.RunGame(&e)
+	err1 := ebiten.RunGame(&e)
+	if err1 != nil {
+		return err.NewContext(err1, "core.Loop() err.Context")
+	}
+	return nil
 }
 
 type ebitenGameWrapper struct {
