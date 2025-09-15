@@ -23,3 +23,15 @@ func (c *Config) Fill(path string) error {
 	defer f.Close()
 	return json.NewDecoder(f).Decode(c)
 }
+
+// Save saves the config back to JSON with the specified path.
+func (c *Config) Save(path string) error {
+	f, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+	enc := json.NewEncoder(f)
+	enc.SetIndent("", "  ")
+	return enc.Encode(c)
+}
