@@ -24,4 +24,9 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
+	err = entry.Build(c)
+	if err != nil {
+		panic(err)
+	}
 }

@@ -12,8 +12,10 @@ func NewGame() *Game {
 	return &Game{}
 }
 
-func (g *Game) Loop() error{
+func (g *Game) Loop() error {
 	e := ebitenGameWrapper{g}
+	ebiten.SetWindowTitle(g.Window.Title)
+	ebiten.SetWindowSize(g.Window.Width, g.Window.Height)
 	err1 := ebiten.RunGame(&e)
 	if err1 != nil {
 		return err1
