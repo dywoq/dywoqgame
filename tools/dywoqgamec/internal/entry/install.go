@@ -18,14 +18,22 @@ func Install(c *config.Config) error {
 		return errors.New("github.com/dywoq/dywoqgame/tools/dywoqgamec/internal/entry: no packages to install")
 	}
 	for _, pkg := range pkgs {
-		cmd := exec.Command("go", "get", pkg)
-		cmd.Dir = Dir(c)
-		cmd.Stdout = os.Stdout
-		cmd.Stderr = os.Stderr
-		err := cmd.Run()
+		err := command("go", Dir(c), "get", pkg)
 		if err != nil {
 			return err
 		}
 	}
+	err := command("go", Dir(c), "mod", "tidy")
+	if err != nil {
+		return err
+	}
 	return nil
+}
+
+func command(name string, dir string, args ...string) error {
+	cmd := exec.Command(name, args...)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	cmd.Dir = dir
+	return cmd.Run()
 }
