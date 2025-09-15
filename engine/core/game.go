@@ -1,7 +1,6 @@
 package core
 
 import (
-	"github.com/dywoq/dywoqlib/err"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -13,11 +12,11 @@ func NewGame() *Game {
 	return &Game{}
 }
 
-func (g *Game) Loop() err.Context {
+func (g *Game) Loop() error{
 	e := ebitenGameWrapper{g}
 	err1 := ebiten.RunGame(&e)
 	if err1 != nil {
-		return err.NewContext(err1, "core.Loop() err.Context")
+		return err1
 	}
 	return nil
 }
