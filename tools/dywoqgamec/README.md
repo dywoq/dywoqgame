@@ -1,3 +1,3 @@
 # dywoqgamec
 
-dywoqgamec is a compiler, building game.
+dywoqgamec is a compiler, which allows developers to build game.
