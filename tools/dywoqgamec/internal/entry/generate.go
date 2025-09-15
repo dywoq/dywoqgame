@@ -41,18 +41,23 @@ func contentEntry() string {
 	b.WriteString(")\n")
 	b.WriteString("\n")
 	b.WriteString("func main() {\n")
-	b.WriteString("   c := core.Game{}\n")
-	b.WriteString("   if err := c.Loop(); err != nil {\n")
-	b.WriteString("      panic(err)\n")
-	b.WriteString("   }\n")
+	b.WriteString("    c := core.Game{}\n")
+	b.WriteString("    if err := c.Loop(); err != nil {\n")
+	b.WriteString("       panic(err)\n")
+	b.WriteString("    }\n")
 	b.WriteString("}\n")
 	b.WriteString("\n")
 	return b.String()
 }
 
 func contentModuleFile(c *config.Config) string {
+	module := c.Title
+	module = strings.ReplaceAll(module, " ", "_")
+	module = strings.ReplaceAll(module, "-", "")
+	module = strings.ReplaceAll(module, ".", "")
+
 	var b strings.Builder
-	b.WriteString(fmt.Sprintf("module %s\n", c.Title))
+	b.WriteString(fmt.Sprintf("module %s\n", module))
 	b.WriteString("\n")
 	b.WriteString("go 1.25.0\n")
 	b.WriteString("\n")
