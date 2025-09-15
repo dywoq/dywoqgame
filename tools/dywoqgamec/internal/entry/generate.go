@@ -37,7 +37,7 @@ func contentEntry() string {
 	b.WriteString("package main\n")
 	b.WriteString("\n")
 	b.WriteString("import (\n")
-	b.WriteString("   \"github.com/dywoq/dywoqgame/engine/core\n")
+	b.WriteString("   \"github.com/dywoq/dywoqgame/engine/core\"\n")
 	b.WriteString(")\n")
 	b.WriteString("\n")
 	b.WriteString("func main() {\n")

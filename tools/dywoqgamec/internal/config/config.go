@@ -7,7 +7,7 @@ import (
 
 type Config struct {
 	Title   string   `json:"title"`
-	Version int      `json:"version"`
+	Version string   `json:"version"`
 	Owner   string   `json:"owner"`
 	Link    string   `json:"link"`
 	Year    int      `json:"year"`
