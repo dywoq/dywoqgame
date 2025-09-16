@@ -10,19 +10,3 @@ func State() (any, bool) {
 	}
 	return state, true
 }
-
-func (i *Implementation) Panic(v any) {
-	if _, ok := State(); ok {
-		return
-	}
-	state = v
-}
-
-func (i *Implementation) Recover() (any, bool) {
-	val, ok := State()
-	if ok {
-		state = nil
-		return val, ok
-	}
-	return nil, false
-}
