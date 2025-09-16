@@ -1,6 +1,16 @@
 package lexer
 
+import (
+	"errors"
+	"fmt"
+
+	"github.com/dywoq/dywoqgame/tools/dglc/lexer/token"
+
+	"github.com/dywoq/dywoqgame/tools/dglc/lexer/tokenizer"
+)
+
 type Lexer struct {
+	Tokenizers        []tokenizer.Func
 	input             string
 	pos, line, column int
 }
@@ -82,4 +92,58 @@ func (l *Lexer) Read() byte {
 	char := l.input[l.pos]
 	l.Advance()
 	return char
+}
+
+func (l *Lexer) Tokenize() ([]*token.Token, error) {
+	tokens := []*token.Token{}
+	for {
+		if l.Eof() {
+			break
+		}
+		l.skipWhitespace()
+		foundToken := false
+		for _, tokenizer := range l.Tokenizers {
+			startPos := l.Position()
+			tok, err := tokenizer(l)
+			if err != nil && tok != nil {
+				tokens = append(tokens, tok)
+				foundToken = true
+				break
+			} else {
+				err := l.SetPosition(startPos)
+				if err != nil {
+					return nil, err
+				}
+			}
+		}
+		if !foundToken {
+			return nil, fmt.Errorf("unexpected token at line %d, column %d", l.Line(), l.Column())
+		}
+	}
+	tokens = append(tokens, &token.Token{Type: token.Eof, Literal: ""})
+	return tokens, nil
+}
+
+func (l *Lexer) SetPosition(pos int) error {
+	if pos < 0 || pos > len(l.input) {
+		return errors.New("position is out of bounds")
+	}
+	l.pos = 0
+	l.line = 1
+	l.column = 1
+	for l.pos < pos {
+		l.Advance()
+	}
+	return nil
+}
+
+func (l *Lexer) skipWhitespace() {
+	for l.pos < len(l.input) {
+		char := l.input[l.pos]
+		if char == ' ' || char == '\t' || char == '\n' || char == '\r' {
+			l.Advance()
+		} else {
+			break
+		}
+	}
 }
