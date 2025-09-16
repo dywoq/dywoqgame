@@ -1,4 +1,4 @@
-package lexer
+package context
 
 type Context interface {
 	// Input returns the input from the lexer.
@@ -12,6 +12,9 @@ type Context interface {
 
 	// Advance advances the position to the next character.
 	Advance()
+
+	// AdvanceBy advances to the next position by n.
+	AdvanceBy(n int) error
 
 	// Slice allows you to select the value with the start and end of it.
 	// The start will be immediately set to 0 if your start is negative.

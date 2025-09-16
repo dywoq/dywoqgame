@@ -34,6 +34,19 @@ func (l *Lexer) Advance() {
 	l.pos++
 }
 
+func (l *Lexer) AdvanceBy(n int) error {
+	if l.Eof() {
+		return ErrNegativeAdvance
+	}
+	for range n {
+		if l.Eof() {
+			return ErrEof
+		}
+		l.Advance()
+	}
+	return nil
+}
+
 func (l *Lexer) Slice(start, end int) (string, error) {
 	switch {
 	case start < 0:
