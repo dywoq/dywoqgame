@@ -13,13 +13,9 @@ type Context interface {
 	// Advance advances the position to the next character.
 	Advance()
 
-	// Rewind moves the position back by -1, otherwise, if the position is zero,
-	// the function does nothing.
-	Rewind()
-
 	// Slice allows you to select the value with the start and end of it.
-	// The start will be immediately set to 0, not your start number, if the current position is zero.
-	Slice(start, end int) string
+	// The start will be immediately set to 0 if your start is negative.
+	Slice(start, end int) (string, error)
 
 	// Current returns the current character.
 	Current() byte
