@@ -1,4 +1,4 @@
-package globals
+package constraints
 
 // Comparable defines Compare method to make the types comparable.
 type Comparable[T any] interface {

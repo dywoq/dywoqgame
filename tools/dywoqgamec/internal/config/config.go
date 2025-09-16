@@ -12,6 +12,8 @@ type Config struct {
 	Link    string   `json:"link"`
 	Year    int      `json:"year"`
 	Authors []string `json:"authors"`
+	Scripts string   `json:"scripts"`
+	Assets  string   `json:"assets"`
 }
 
 // Fill fills the config instance with the information from the Json config, which located at path.
