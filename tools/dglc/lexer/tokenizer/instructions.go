@@ -7,7 +7,21 @@ import (
 	"github.com/dywoq/dywoqgame/tools/dglc/lexer/token"
 )
 
-func MovInstruction(c context.Context) (*token.Token, error) {
+var instructionsMap = map[string]token.Type{
+	"mov":       token.InstructionMov,
+	"make":      token.InstructionMake,
+	"const":     token.InstructionConst,
+	"add":       token.InstructionAdd,
+	"minus":     token.InstructionMinus,
+	"div":       token.InstructionDiv,
+	"mul":       token.InstructionMul,
+	"ret":       token.InstructionRet,
+	"terminate": token.InstructionTerminate,
+	"stdout":    token.InstructionStdout,
+	"stderr":    token.InstructionStderr,
+}
+
+func Instruction(c context.Context) (*token.Token, error) {
 	startPos := c.Position()
 	char := c.Peek()
 	if !isLetter(char) {
@@ -20,9 +34,10 @@ func MovInstruction(c context.Context) (*token.Token, error) {
 	if err != nil {
 		return nil, err
 	}
-	if literal != "mov" {
+	val, ok := instructionsMap[literal]
+	if !ok {
 		c.SetPosition(startPos)
-		return nil, fmt.Errorf("expected mov instruction")
+		return nil, fmt.Errorf("didn't find the corresponding instruction: %s", literal)
 	}
-	return &token.Token{Type: token.InstructionMov, Literal: literal, Line: c.Line(), Column: c.Column()}, nil
+	return &token.Token{Type: val, Literal: literal, Line: c.Line(), Column: c.Column()}, nil
 }

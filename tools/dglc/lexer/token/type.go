@@ -39,5 +39,15 @@ const (
 	TypeUnsignedInteger64Bit Type = "type-unsigned-integer-64-bit"
 	TypeString               Type = "type-string"
 
-	InstructionMov Type = "instruction-mov"
+	InstructionMov       Type = "instruction-mov"
+	InstructionMake      Type = "instruction-make"
+	InstructionConst     Type = "instruction-const"
+	InstructionAdd       Type = "instruction-add"
+	InstructionMinus     Type = "instruction-minus"
+	InstructionDiv       Type = "instruction-div"
+	InstructionMul       Type = "instruction-mul"
+	InstructionRet       Type = "instruction-ret"
+	InstructionTerminate Type = "instruction-terminate"
+	InstructionStderr    Type = "instruction-stderr"
+	InstructionStdout    Type = "instruction-stdout"
 )

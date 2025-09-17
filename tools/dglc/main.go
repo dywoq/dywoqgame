@@ -8,11 +8,11 @@ import (
 )
 
 func main() {
-	src := "add int64 x, int64 y {\nmov result, x\nmov ret, result\n}"
+	src := `stdout "HI!"`
 	l := lexer.New(src, []tokenizer.Func{
 		tokenizer.Separate,
 		tokenizer.VarType,
-		tokenizer.MovInstruction,
+		tokenizer.Instruction,
 
 		tokenizer.Identifier,
 
