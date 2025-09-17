@@ -10,5 +10,5 @@ type Token struct {
 }
 
 func (t *Token) String() string {
-	return fmt.Sprintf("{type: %s, literal: %s, line: %d, column: %d}", t.Type, t.Literal, t.Line, t.Column)
+	return fmt.Sprintf("{type: %s, literal: \"%s\", line: %d, column: %d}", t.Type, t.Literal, t.Line, t.Column)
 }
