@@ -1,8 +1,7 @@
 package context
 
 import (
-	"go/token"
-
+	"github.com/dywoq/dywoqgame/tools/dglc/lexer/token"
 	"github.com/dywoq/dywoqgame/tools/dglc/parser/expression"
 )
 
@@ -24,7 +23,7 @@ type Peek interface {
 	Current() *token.Token
 
 	// Past returns the past expression that was already processed.
-	// It can return nil if there's no processed expressions.
+	// It can return nil if the past element' position is less than zero.
 	Past() *expression.Expression
 
 	// Next returns the next token.

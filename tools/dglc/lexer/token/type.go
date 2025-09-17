@@ -49,3 +49,20 @@ const (
 	InstructionRet       Type = "instruction-ret"
 	InstructionTerminate Type = "instruction-terminate"
 )
+
+func IsVarType(s Type) bool {
+	switch s {
+	case TypeSignedInteger8bit,
+		TypeSignedInteger16Bit,
+		TypeSignedInteger32bit,
+		TypeSignedInteger64Bit,
+		TypeUnsignedInteger16Bit,
+		TypeUnsignedInteger32bit,
+		TypeUnsignedInteger64Bit,
+		TypeUnsignedInteger8bit,
+		TypeString:
+		return true
+	default:
+		return false
+	}
+}
