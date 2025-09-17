@@ -8,10 +8,11 @@ import (
 )
 
 func main() {
-	l := lexer.New("# sdsdsd\n  something", []tokenizer.Func{
+	l := lexer.New("", []tokenizer.Func{
+		tokenizer.VarType,
 		tokenizer.Number,
-		tokenizer.String,
 		tokenizer.Identifier,
+		tokenizer.String,
 	})
 	result, err := l.Tokenize()
 	if err != nil {

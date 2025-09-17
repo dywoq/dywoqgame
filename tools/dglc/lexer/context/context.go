@@ -34,4 +34,7 @@ type Context interface {
 
 	// Read returns the current character, and advances to the next position.
 	Read() byte
+
+	// SetPosition sets the current position to pos.
+	SetPosition(pos int) error
 }

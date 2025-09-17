@@ -28,4 +28,14 @@ const (
 	SeparatorRParen    Type = "separator-rparen"
 	SeparatorLBrace    Type = "separator-lbrace"
 	SeparatorRBrace    Type = "separator-rbrace"
+
+	TypeSignedInteger8bit    Type = "type-signed-integer-8-bit"
+	TypeSignedInteger16Bit   Type = "type-signed-integer-16-bit"
+	TypeSignedInteger32bit   Type = "type-signed-integer-32-bit"
+	TypeSignedInteger64Bit   Type = "type-signed-integer-64-bit"
+	TypeUnsignedInteger8bit  Type = "type-unsigned-integer-8-bit"
+	TypeUnsignedInteger16Bit Type = "type-unsigned-integer-16-bit"
+	TypeUnsignedInteger32bit Type = "type-unsigned-integer-32-bit"
+	TypeUnsignedInteger64Bit Type = "type-unsigned-integer-64-bit"
+	TypeString               Type = "type-string"
 )
