@@ -19,7 +19,7 @@ func Number(c context.Context) (*token.Token, error) {
 		return &token.Token{}, errors.New("not an integer")
 	}
 	c.AdvanceBy(len(match))
-	return &token.Token{Type: token.Integer, Literal: match}, nil
+	return &token.Token{Type: token.Integer, Literal: match, Line: c.Line(), Column: c.Column()}, nil
 }
 
 func String(c context.Context) (*token.Token, error) {
@@ -29,5 +29,5 @@ func String(c context.Context) (*token.Token, error) {
 	}
 	c.AdvanceBy(len(match))
 	literal := match[1 : len(match)-1]
-	return &token.Token{Type: token.String, Literal: literal}, nil
+	return &token.Token{Type: token.String, Literal: literal, Line: c.Line(), Column: c.Column()}, nil
 }

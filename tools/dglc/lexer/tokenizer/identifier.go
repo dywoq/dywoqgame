@@ -18,5 +18,5 @@ func Identifier(c context.Context) (*token.Token, error) {
 		return nil, errors.New("not a valid identifier")
 	}
 	c.AdvanceBy(len(match))
-	return &token.Token{Type: token.Identifier, Literal: match}, nil
+	return &token.Token{Type: token.Identifier, Literal: match, Line: c.Line(), Column: c.Column()}, nil
 }

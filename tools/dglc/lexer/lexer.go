@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 	"github.com/dywoq/dywoqgame/tools/dglc/lexer/token"
-
 	"github.com/dywoq/dywoqgame/tools/dglc/lexer/tokenizer"
 )
 
@@ -123,7 +122,7 @@ func (l *Lexer) Tokenize() ([]*token.Token, error) {
 			}
 		}
 		if !foundToken {
-			return nil, fmt.Errorf("unexpected token at line %d, column %d", l.Line(), l.Column())
+			return nil, fmt.Errorf("unexpected token at line %d, column %d: %s", l.Line(), l.Column(), string(l.Current()))
 		}
 	}
 	tokens = append(tokens, &token.Token{Type: token.Eof, Literal: ""})

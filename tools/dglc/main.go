@@ -8,7 +8,9 @@ import (
 )
 
 func main() {
-	l := lexer.New("", []tokenizer.Func{
+	src := "int8 y 2"
+	l := lexer.New(src, []tokenizer.Func{
+		tokenizer.Separate,
 		tokenizer.VarType,
 		tokenizer.Number,
 		tokenizer.Identifier,
@@ -20,7 +22,7 @@ func main() {
 	}
 	for _, t := range result {
 		if t != nil {
-			fmt.Println(*t)
+			fmt.Println(t)
 		}
 	}
 }
