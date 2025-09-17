@@ -15,6 +15,11 @@ type Lexer struct {
 	pos, line, column int
 }
 
+func New(input string, tokenizers []tokenizer.Func) *Lexer {
+	l := &Lexer{Tokenizers: tokenizers, input: input}
+	return l
+}
+
 func (l *Lexer) Input() string {
 	return l.input
 }
@@ -101,11 +106,12 @@ func (l *Lexer) Tokenize() ([]*token.Token, error) {
 			break
 		}
 		l.skipWhitespace()
+		l.skipComments()
 		foundToken := false
 		for _, tokenizer := range l.Tokenizers {
 			startPos := l.Position()
 			tok, err := tokenizer(l)
-			if err != nil && tok != nil {
+			if err == nil && tok != nil {
 				tokens = append(tokens, tok)
 				foundToken = true
 				break
@@ -144,6 +150,17 @@ func (l *Lexer) skipWhitespace() {
 			l.Advance()
 		} else {
 			break
+		}
+	}
+}
+
+func (l *Lexer) skipComments() {
+	if l.Peek() == '#' {
+		for l.Peek() != '\n' && !l.Eof() {
+			l.Advance()
+		}
+		if l.Peek() == '\n' {
+			l.Advance()
 		}
 	}
 }
