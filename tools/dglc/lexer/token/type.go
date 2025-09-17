@@ -48,6 +48,4 @@ const (
 	InstructionMul       Type = "instruction-mul"
 	InstructionRet       Type = "instruction-ret"
 	InstructionTerminate Type = "instruction-terminate"
-	InstructionStderr    Type = "instruction-stderr"
-	InstructionStdout    Type = "instruction-stdout"
 )

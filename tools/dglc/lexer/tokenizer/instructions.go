@@ -17,8 +17,6 @@ var instructionsMap = map[string]token.Type{
 	"mul":       token.InstructionMul,
 	"ret":       token.InstructionRet,
 	"terminate": token.InstructionTerminate,
-	"stdout":    token.InstructionStdout,
-	"stderr":    token.InstructionStderr,
 }
 
 func Instruction(c context.Context) (*token.Token, error) {
