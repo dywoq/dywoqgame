@@ -8,13 +8,17 @@ import (
 )
 
 func main() {
-	src := "int8 y 2"
+	src := "mov"
 	l := lexer.New(src, []tokenizer.Func{
 		tokenizer.Separate,
 		tokenizer.VarType,
-		tokenizer.Number,
+		tokenizer.MovInstruction,
+		
 		tokenizer.Identifier,
+		
+		tokenizer.Number,
 		tokenizer.String,
+
 	})
 	result, err := l.Tokenize()
 	if err != nil {

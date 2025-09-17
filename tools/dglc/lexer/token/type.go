@@ -38,4 +38,6 @@ const (
 	TypeUnsignedInteger32bit Type = "type-unsigned-integer-32-bit"
 	TypeUnsignedInteger64Bit Type = "type-unsigned-integer-64-bit"
 	TypeString               Type = "type-string"
+
+	InstructionMov Type = "instruction-mov"
 )
