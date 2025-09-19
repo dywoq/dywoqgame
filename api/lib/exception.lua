@@ -19,6 +19,10 @@ function exception.get() end
 --- This is for fatal, unrecoverable errors.
 function exception.terminate() end
 
---- exception.get_chain_messages returns a table of all nested error messages.
+--- Returns a table of all nested error messages.
 --- @return table A table containing all messages in the exception chain.
 function exception.get_chain_messages() end
+
+--- Outputs the latest thrown exception message, 
+--- only if the internal list of the exceptions is not empty. 
+function exception.output() end
