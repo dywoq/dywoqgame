@@ -26,3 +26,6 @@ function exception.get_chain_messages() end
 --- Outputs the latest thrown exception message, 
 --- only if the internal list of the exceptions is not empty. 
 function exception.output() end
+
+--- Clears the current exceptions list.
+function exception.clear() end
