@@ -1,6 +1,12 @@
 reflect = {}
 
 --- Returns the type of a.
+--- May return:
+---
+--- `string`, `number`, `function`, `boolean`, `nil`, `thread`, `table`, `userdata`
+---
+--- or `nil` if this is the wrong type.
+---
 --- @param a any The parameter to get type from.
 --- @return string
 function reflect.type(a) end
