@@ -1,5 +1,7 @@
 unsafe = {}
 
+--- @class unsafe.numeric
+unsafe.numeric = {}
 --- Creates a new numeric value with the specified type.
 --- For example, if type is "int32",
 --- the game engine will create the variable with type "int32".
@@ -26,6 +28,7 @@ function unsafe.numeric.copy(dst, src) end
 --- @param ... table Numeric values to add.
 --- @return table A new numeric value representing the sum.
 --- @throw "type mismatch" if arguments have different types.
+--- 
 --- @throw "overflow" if the result exceeds the type's range.
 function unsafe.numeric.add(...) end
 
@@ -33,6 +36,7 @@ function unsafe.numeric.add(...) end
 --- @param ... table Numeric values.
 --- @return table A new numeric value representing the difference.
 --- @throw "type mismatch" if arguments have different types.
+--- 
 --- @throw "underflow" if the result falls below the type's range.
 function unsafe.numeric.minus(...) end
 
@@ -40,6 +44,7 @@ function unsafe.numeric.minus(...) end
 --- @param ... table Numeric values.
 --- @return table A new numeric value representing the quotient.
 --- @throw "type mismatch" if arguments have different types.
+--- 
 --- @throw "division by zero" if any divisor is zero.
 function unsafe.numeric.divide(...) end
 
@@ -47,5 +52,7 @@ function unsafe.numeric.divide(...) end
 --- @param ... table Numeric values.
 --- @return table A new numeric value representing the product.
 --- @throw "type mismatch" if arguments have different types.
+--- 
 --- @throw "overflow" if the result exceeds the type's range.
 function unsafe.numeric.multiply(...) end
+
