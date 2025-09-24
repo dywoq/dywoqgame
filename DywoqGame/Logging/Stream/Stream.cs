@@ -39,4 +39,31 @@ public class Stream(byte maxSize) : IStreamFlusher, IStreamSize, IStreamWriter, 
 		}
 		buffer.Add(message);
 	}
+
+	public override bool Equals(object? obj)
+	{
+		return obj is Stream s && Size() == s.Size();
+	}
+
+	public override int GetHashCode()
+	{
+		return Size().GetHashCode();
+	}
+
+	public static Stream operator +(Stream s, object message)
+	{
+		s.Write(message);
+		return s;
+	}
+
+	public static bool operator ==(Stream left, Stream right)
+	{
+		if (left is null) return right is null;
+		return left.Equals(right);
+	}
+
+	public static bool operator !=(Stream left, Stream right)
+	{
+		return !(left == right);
+	}
 }
