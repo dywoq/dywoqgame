@@ -8,6 +8,19 @@ type Kind string
 // Map represents the map of tokens.
 type Map map[string]Kind
 
+// Position is a token position.
+type Position struct {
+	Line     int `json:"line"`
+	Column   int `json:"column"`
+	Position int `json:"position"`
+}
+
+type Token struct {
+	Literal  string    `json:"literal"`
+	Kind     Kind      `json:"kind"`
+	Position *Position `json:"position"`
+}
+
 const (
 	KIND_ILLEGAL    Kind = "illegal"
 	KIND_KEYWORD    Kind = "keyword"
@@ -65,6 +78,16 @@ func IsIdentifier(value string) bool {
 		}
 	}
 	return true
+}
+
+// NewPosition returns a pointer to new token position.
+func NewPosition(line, column, position int) *Position {
+	return &Position{line, column, position}
+}
+
+// NewToken returns a pointer to new token.
+func NewToken(literal string, kind Kind, position *Position) *Token {
+	return &Token{Literal: literal, Kind: kind, Position: position}
 }
 
 // Is reports whether the value exists in the tokens map.
