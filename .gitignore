@@ -1,0 +1,43 @@
+# Build directories
+build/
+bin/
+out/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Compiled binaries
+*.exe
+*.dll
+*.so
+*.dylib
+*.a
+*.lib
+*.obj
+*.o
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+
+# IDE / editor files
+.vscode/
+.idea/
+*.sln
+*.vcxproj*
+*.user
+*.ncb
+*.sdf
+*.opensdf
+*.xcodeproj/
+*.xcworkspace/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Other generated files
+*.pch
+*.pdb
