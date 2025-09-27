@@ -97,3 +97,12 @@ func TokenizeKeyword(c Context, r rune) (*token.Token, error) {
 	}
 	return c.New(str, token.KIND_KEYWORD), nil
 }
+
+// TokenizeSeparator tokenizer r into the separator token.
+func TokenizeSeparator(c Context, r rune) (*token.Token, error) {
+	if !token.Separators.Is(string(r)) {
+		return nil, ErrNoMatch
+	}
+	c.Advance(1)
+	return c.New(string(r), token.KIND_SEPARATOR), nil
+}

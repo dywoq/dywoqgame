@@ -29,6 +29,7 @@ func (s *Scanner) setup() {
 		TokenizeKeyword,
 		TokenizeNumber,
 		TokenizeString,
+		TokenizeSeparator,
 	}
 	s.setupOn = true
 }

@@ -25,6 +25,11 @@ func TestScannerScan(t *testing.T) {
 		{"import", token.KIND_KEYWORD},
 		{"nil", token.KIND_KEYWORD},
 		{"declare", token.KIND_KEYWORD},
+
+		// tokenizing separators
+		{",", token.KIND_SEPARATOR},
+		{"{", token.KIND_SEPARATOR},
+		{"}", token.KIND_SEPARATOR},
 	}
 
 	for _, test := range tests {
