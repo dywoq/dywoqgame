@@ -77,3 +77,23 @@ func TokenizeString(c Context, r rune) (*token.Token, error) {
 	}
 	return nil, errors.New("unterminated string literal")
 }
+
+// TokenizeKeywords tokenizes r into the keyword token.
+func TokenizeKeyword(c Context, r rune) (*token.Token, error) {
+	if !unicode.IsLetter(r) {
+		return nil, ErrNoMatch
+	}
+	startPos := c.Position().Position
+	for unicode.IsLetter(c.Current()) {
+		c.Advance(1)
+	}
+	str, err := c.Slice(startPos, c.Position().Position)
+	if err != nil {
+		return nil, err
+	}
+	if !token.Keywords.Is(str) {
+		c.Position().Position = startPos
+		return nil, ErrNoMatch
+	}
+	return c.New(str, token.KIND_KEYWORD), nil
+}

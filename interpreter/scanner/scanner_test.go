@@ -18,6 +18,13 @@ func TestScannerScan(t *testing.T) {
 
 		// tokenizing strings
 		{`"Hi!"`, token.KIND_STRING},
+
+		// tokenizing keywords
+		{"export", token.KIND_KEYWORD},
+		{"module", token.KIND_KEYWORD},
+		{"import", token.KIND_KEYWORD},
+		{"nil", token.KIND_KEYWORD},
+		{"declare", token.KIND_KEYWORD},
 	}
 
 	for _, test := range tests {

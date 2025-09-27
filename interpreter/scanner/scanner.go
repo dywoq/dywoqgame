@@ -26,6 +26,7 @@ func (s *Scanner) setup() {
 		return
 	}
 	s.tokenizers = []Tokenizer{
+		TokenizeKeyword,
 		TokenizeNumber,
 		TokenizeString,
 	}
@@ -69,7 +70,7 @@ func (s *Scanner) Scan(input string) ([]*token.Token, error) {
 			break
 		}
 		if !matched {
-			s.Advance(1) // prevent freeze on unknown characters
+			s.Advance(1)
 		}
 	}
 	result = append(result, token.NewToken("", token.KIND_EOF, s.position))
