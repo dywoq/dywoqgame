@@ -41,17 +41,24 @@ type Creator interface {
 type Slicer interface {
 	// Slice returns the substring of the input with start and end.
 	// If the start is negative, start is greater than end,
-	// or end is greater than the length of the input,
+	// end is greater than the length of the input,
+	// or the current input is empty,
 	// sends an empty string and an error.
 	Slice(start, end int) (string, error)
 }
 
+type EofChecker interface {
+	// Eof reports whether the end of file (EOF) is reached by the scanner.	
+	Eof() bool
+}
+
 // Context is a interface that allows you to manipulate scanner,
-// such as advancing, manipulating, creating tokens, slicing and getting position.
+// such as advancing, manipulating, creating tokens, slicing, EOF checking and getting position.
 type Context interface {
 	Reader
 	PositionGetter
 	Advancer
 	Creator
 	Slicer
+	EofChecker
 }

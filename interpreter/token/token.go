@@ -27,6 +27,10 @@ const (
 	KIND_TYPE       Kind = "kind"
 	KIND_SEPARATOR  Kind = "separator"
 	KIND_IDENTIFIER Kind = "identifier"
+	KIND_FLOAT      Kind = "float"
+	KIND_INTEGER    Kind = "integer"
+	KIND_STRING     Kind = "string"
+	KIND_EOF        Kind = "eof"
 )
 
 var (
