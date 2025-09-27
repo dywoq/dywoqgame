@@ -24,7 +24,7 @@ type Token struct {
 const (
 	KIND_ILLEGAL    Kind = "illegal"
 	KIND_KEYWORD    Kind = "keyword"
-	KIND_TYPE       Kind = "kind"
+	KIND_TYPE       Kind = "type"
 	KIND_SEPARATOR  Kind = "separator"
 	KIND_IDENTIFIER Kind = "identifier"
 	KIND_FLOAT      Kind = "float"

@@ -30,6 +30,19 @@ func TestScannerScan(t *testing.T) {
 		{",", token.KIND_SEPARATOR},
 		{"{", token.KIND_SEPARATOR},
 		{"}", token.KIND_SEPARATOR},
+
+		// tokenizing types
+		{"str", token.KIND_TYPE},
+		{"bool", token.KIND_TYPE},
+		{"i8", token.KIND_TYPE},
+		{"i16", token.KIND_TYPE},
+		{"i32", token.KIND_TYPE},
+		{"i64", token.KIND_TYPE},
+		{"u8", token.KIND_TYPE},
+		{"u16", token.KIND_TYPE},
+		{"u32", token.KIND_TYPE},
+		{"u64", token.KIND_TYPE},
+		{"void", token.KIND_TYPE},
 	}
 
 	for _, test := range tests {
@@ -41,7 +54,7 @@ func TestScannerScan(t *testing.T) {
 			}
 
 			if test.kind != tokens[0].Kind {
-				t.Errorf("got %s, want %s", tokens[0].Kind, test.kind)
+				t.Errorf("got %s (literal %s), want %s (literal %s)", tokens[0].Kind, tokens[0].Literal, test.kind, test.input)
 			}
 		})
 	}

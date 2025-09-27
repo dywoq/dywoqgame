@@ -26,6 +26,7 @@ func (s *Scanner) setup() {
 		return
 	}
 	s.tokenizers = []Tokenizer{
+		TokenizeType,
 		TokenizeKeyword,
 		TokenizeNumber,
 		TokenizeString,

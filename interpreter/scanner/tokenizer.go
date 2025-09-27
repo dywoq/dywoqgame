@@ -2,6 +2,7 @@ package scanner
 
 import (
 	"errors"
+	"fmt"
 	"unicode"
 
 	"github.com/dywoq/dywoqgame/interpreter/token"
@@ -98,11 +99,52 @@ func TokenizeKeyword(c Context, r rune) (*token.Token, error) {
 	return c.New(str, token.KIND_KEYWORD), nil
 }
 
-// TokenizeSeparator tokenizer r into the separator token.
+// TokenizeSeparator tokenizes r into the separator token.
 func TokenizeSeparator(c Context, r rune) (*token.Token, error) {
 	if !token.Separators.Is(string(r)) {
 		return nil, ErrNoMatch
 	}
 	c.Advance(1)
 	return c.New(string(r), token.KIND_SEPARATOR), nil
+}
+
+// TokenizeType tokenizes r into the type token.
+func TokenizeType(c Context, r rune) (*token.Token, error) {
+	if !unicode.IsLetter(r) {
+		return nil, ErrNoMatch
+	}
+
+	startPos := c.Position().Position
+
+	for !c.Eof() && unicode.IsLetter(c.Current()) {
+		c.Advance(1)
+	}
+
+	str, err := c.Slice(startPos, c.Position().Position)
+	if err != nil {
+		return nil, err
+	}
+
+	switch str {
+	case "str", "bool", "void":
+		return c.New(str, token.KIND_TYPE), nil
+	case "i", "u":
+		for !c.Eof() && unicode.IsDigit(c.Current()) {
+			c.Advance(1)
+		}
+		str, err := c.Slice(startPos, c.Position().Position)
+		if err != nil {
+			return nil, err
+		}
+		if !token.Types.Is(str) {
+			return nil, fmt.Errorf("wrong integer type: %s", str)
+		}
+		return c.New(str, token.KIND_TYPE), nil
+	default:
+		if token.Types.Is(str) {
+			return c.New(str, token.KIND_TYPE), nil
+		}
+		c.Position().Position = startPos
+		return nil, ErrNoMatch
+	}
 }
