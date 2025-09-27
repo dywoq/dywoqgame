@@ -1,5 +1,7 @@
 package parser
 
+import "github.com/dywoq/dywoqgame/interpreter/token"
+
 type ModuleStatementType string
 
 type Node interface {
@@ -22,8 +24,8 @@ type InstructionStatement struct {
 }
 
 type InstructionArgumentStatement struct {
-	Type  string `json:"type"`
-	Value string `json:"value"`
+	Type  token.Kind `json:"type"`
+	Value string     `json:"value"`
 }
 
 type FunctionArgumentStatement struct {
