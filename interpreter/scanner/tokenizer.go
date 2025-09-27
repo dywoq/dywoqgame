@@ -21,7 +21,6 @@ func TokenizeNumber(c Context, r rune) (*token.Token, error) {
 	if !unicode.IsDigit(r) {
 		return nil, ErrNoMatch
 	}
-	c.Advance(1)
 
 	start := c.Position().Position
 	for !c.Eof() && unicode.IsDigit(c.Current()) {

@@ -28,11 +28,11 @@ func (s *Scanner) setup() {
 	s.tokenizers = []Tokenizer{
 		TokenizeType,
 		TokenizeKeyword,
+		TokenizeSeparator,
 		TokenizeBaseInstruction,
 		TokenizeIdentifier,
 		TokenizeNumber,
 		TokenizeString,
-		TokenizeSeparator,
 	}
 	s.setupOn = true
 }

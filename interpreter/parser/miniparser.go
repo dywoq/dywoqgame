@@ -30,11 +30,6 @@ func ParseInstruction(c Context, t *token.Token) (Node, error) {
 			Value: current.Literal,
 		})
 		c.Advance(1)
-
-		next := c.Current()
-		if next == nil || (next.Kind != token.KIND_SEPARATOR || next.Literal != ",") {
-			break
-		}
 	}
 
 	return InstructionStatement{

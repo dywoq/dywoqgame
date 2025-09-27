@@ -14,6 +14,10 @@ type Parser struct {
 	setupOn       bool
 }
 
+func NewParser() *Parser {
+	return &Parser{currentTokens: []*token.Token{}, pos: 0, miniParsers: []MiniParser{}, setupOn: false}
+}
+
 // setups setups the default mini parsers,
 // and sets p.setupOn to true.
 func (p *Parser) setup() {
@@ -59,7 +63,15 @@ func (p *Parser) Peek() *token.Token {
 // Advance goes to the next token by n.
 // If the current parser position+n will be greater than the length of the tokens,
 // or the parser position reached EOF token, the function will return nil.
-func (p *Parser) Advance(n int) {}
+func (p *Parser) Advance(n int) {
+	if len(p.currentTokens) == 0 {
+		return
+	}
+	p.pos += n
+	if p.pos >= len(p.currentTokens) {
+		p.pos = len(p.currentTokens) - 1
+	}
+}
 
 // Eof reports whether the parser reached EOF token.
 func (p *Parser) Eof() bool {
