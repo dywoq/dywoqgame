@@ -43,6 +43,12 @@ func TestScannerScan(t *testing.T) {
 		{"u32", token.KIND_TYPE},
 		{"u64", token.KIND_TYPE},
 		{"void", token.KIND_TYPE},
+
+		// tokenizing identifiers
+		{"Foo", token.KIND_IDENTIFIER},
+		{"Foo_2_A", token.KIND_IDENTIFIER},
+		{"Foo_SD_", token.KIND_IDENTIFIER},
+		{"__PrivateFoo", token.KIND_IDENTIFIER},
 	}
 
 	for _, test := range tests {

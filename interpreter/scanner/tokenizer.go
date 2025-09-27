@@ -148,3 +148,30 @@ func TokenizeType(c Context, r rune) (*token.Token, error) {
 		return nil, ErrNoMatch
 	}
 }
+
+// TokenizeIdentifier tokenizes r into the identifier token.
+func TokenizeIdentifier(c Context, r rune) (*token.Token, error) {
+	if !unicode.IsLetter(r) && r != '_' {
+		return nil, ErrNoMatch
+	}
+	start := c.Position().Position
+
+	for !c.Eof() {
+		c.Advance(1)
+		r := c.Current()
+		if unicode.IsSpace(r) || token.Separators.Is(string(r)) {
+			break
+		}
+	}
+
+	str, err := c.Slice(start, c.Position().Position)
+	if err != nil {
+		return nil, err
+	}
+
+	if !token.IsIdentifier(str) {
+		return nil, fmt.Errorf("wrong identifier: %s", str)
+	}
+
+	return c.New(str, token.KIND_IDENTIFIER), nil
+}

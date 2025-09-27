@@ -77,7 +77,13 @@ func IsIdentifier(value string) bool {
 			return false
 		}
 		switch r {
-		case '#', '/', '(', ')':
+		case '#':
+			return false
+		case '/':
+			return false
+		case '(':
+			return false
+		case ')':
 			return false
 		}
 	}
