@@ -27,7 +27,7 @@ func TokenizeNumber(c Context, r rune) (*token.Token, error) {
 		c.Advance(1)
 	}
 
-	if c.Eof() || c.Peek() != '.' {
+	if c.Eof() || c.Current() != '.' {
 		str, err := c.Slice(start, c.Position().Position)
 		if err != nil {
 			return nil, err
@@ -44,7 +44,6 @@ func TokenizeNumber(c Context, r rune) (*token.Token, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	return c.New(str, token.KIND_FLOAT), nil
 }
 
@@ -55,33 +54,24 @@ func TokenizeString(c Context, r rune) (*token.Token, error) {
 		return nil, ErrNoMatch
 	}
 	startPos := c.Position().Position
-	c.Advance(1) 
+	c.Advance(1)
 
 	for !c.Eof() {
 		char := c.Current()
-		if char == 0 {
-			break
-		}
-		if char == '\\' {
-			c.Advance(1)
-			if c.Eof() {
-				break
-			}
-			c.Advance(1)
-			continue
-		}
-
 		if char == '"' {
 			endPos := c.Position().Position + 1
-
 			c.Advance(1)
-
 			str, err := c.Slice(startPos, endPos)
 			if err != nil {
 				return nil, err
 			}
-
 			return c.New(str, token.KIND_STRING), nil
+		}
+		if char == '\\' {
+			c.Advance(1)
+			if c.Eof() {
+				return nil, errors.New("unterminated escape sequence")
+			}
 		}
 		c.Advance(1)
 	}

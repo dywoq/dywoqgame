@@ -94,6 +94,18 @@ func NewToken(literal string, kind Kind, position *Position) *Token {
 	return &Token{Literal: literal, Kind: kind, Position: position}
 }
 
+// Equal reports whether x and y are equal by their literal and kind.
+// If they're nil, it returns false.
+func Equal(x *Token, y *Token) bool {
+	if x == nil || y == nil {
+		return false
+	}
+	if x.Literal == y.Literal && x.Kind == y.Kind {
+		return true
+	}
+	return false
+}
+
 // Is reports whether the value exists in the tokens map.
 func (m Map) Is(value string) bool {
 	_, ok := m[value]

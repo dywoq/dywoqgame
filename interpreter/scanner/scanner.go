@@ -37,6 +37,7 @@ func (s *Scanner) reset(currentInput string) {
 	s.position.Position = 0
 	s.position.Line = 1
 	s.position.Column = 1
+	s.currentInput = currentInput
 }
 
 // Scan sets the current input to input, setups the tokenizers,
@@ -53,11 +54,23 @@ func (s *Scanner) Scan(input string) ([]*token.Token, error) {
 	s.reset(input)
 	result := []*token.Token{}
 	for !s.Eof() {
-		t, err := s.tokenize()
-		if err != nil {
-			return nil, err
+		r := s.Current()
+		matched := false
+		for _, tok := range s.tokenizers {
+			tkn, err := tok(s, r)
+			if err == ErrNoMatch {
+				continue
+			}
+			if err != nil {
+				return nil, err
+			}
+			result = append(result, tkn)
+			matched = true
+			break
 		}
-		result = append(result, t)
+		if !matched {
+			s.Advance(1) // prevent freeze on unknown characters
+		}
 	}
 	result = append(result, token.NewToken("", token.KIND_EOF, s.position))
 	return result, nil
