@@ -158,8 +158,7 @@ func TokenizeIdentifier(c Context, r rune) (*token.Token, error) {
 
 	for !c.Eof() {
 		c.Advance(1)
-		r := c.Current()
-		if unicode.IsSpace(r) || token.Separators.Is(string(r)) {
+		if unicode.IsSpace(c.Current()) || token.Separators.Is(string(c.Current())) {
 			break
 		}
 	}
@@ -174,4 +173,31 @@ func TokenizeIdentifier(c Context, r rune) (*token.Token, error) {
 	}
 
 	return c.New(str, token.KIND_IDENTIFIER), nil
+}
+
+// TokenizeBaseInstruction tokenizes r into the base instruction.
+func TokenizeBaseInstruction(c Context, r rune) (*token.Token, error) {
+	if !unicode.IsLetter(r) {
+		return nil, ErrNoMatch
+	}
+	start := c.Position().Position
+
+	for !c.Eof() {
+		c.Advance(1)
+		if unicode.IsSpace(c.Current()) {
+			break
+		}
+	}
+
+	str, err := c.Slice(start, c.Position().Position)
+	if err != nil {
+		return nil, err
+	}
+
+	if !token.BaseInstructions.Is(str) {
+		c.Position().Position = start
+		return nil, ErrNoMatch
+	}
+
+	return c.New(str, token.KIND_BASE_INSTRUCTION), nil
 }

@@ -22,15 +22,16 @@ type Token struct {
 }
 
 const (
-	KIND_ILLEGAL    Kind = "illegal"
-	KIND_KEYWORD    Kind = "keyword"
-	KIND_TYPE       Kind = "type"
-	KIND_SEPARATOR  Kind = "separator"
-	KIND_IDENTIFIER Kind = "identifier"
-	KIND_FLOAT      Kind = "float"
-	KIND_INTEGER    Kind = "integer"
-	KIND_STRING     Kind = "string"
-	KIND_EOF        Kind = "eof"
+	KIND_ILLEGAL          Kind = "illegal"
+	KIND_KEYWORD          Kind = "keyword"
+	KIND_TYPE             Kind = "type"
+	KIND_SEPARATOR        Kind = "separator"
+	KIND_IDENTIFIER       Kind = "identifier"
+	KIND_FLOAT            Kind = "float"
+	KIND_INTEGER          Kind = "integer"
+	KIND_STRING           Kind = "string"
+	KIND_BASE_INSTRUCTION Kind = "base_instruction"
+	KIND_EOF              Kind = "eof"
 )
 
 var (
@@ -60,6 +61,15 @@ var (
 		"u32":  KIND_TYPE,
 		"u64":  KIND_TYPE,
 		"void": KIND_TYPE,
+	}
+
+	BaseInstructions = Map{
+		"add":   KIND_BASE_INSTRUCTION,
+		"sub":   KIND_BASE_INSTRUCTION,
+		"mul":   KIND_BASE_INSTRUCTION,
+		"div":   KIND_BASE_INSTRUCTION,
+		"write": KIND_BASE_INSTRUCTION,
+		"store": KIND_BASE_INSTRUCTION,
 	}
 )
 

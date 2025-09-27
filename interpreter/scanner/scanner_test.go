@@ -49,6 +49,14 @@ func TestScannerScan(t *testing.T) {
 		{"Foo_2_A", token.KIND_IDENTIFIER},
 		{"Foo_SD_", token.KIND_IDENTIFIER},
 		{"__PrivateFoo", token.KIND_IDENTIFIER},
+
+		// tokenizing base instructions
+		{"add", token.KIND_BASE_INSTRUCTION},
+		{"sub", token.KIND_BASE_INSTRUCTION},
+		{"mul", token.KIND_BASE_INSTRUCTION},
+		{"div", token.KIND_BASE_INSTRUCTION},
+		{"write", token.KIND_BASE_INSTRUCTION},
+		{"store", token.KIND_BASE_INSTRUCTION},
 	}
 
 	for _, test := range tests {
@@ -60,7 +68,7 @@ func TestScannerScan(t *testing.T) {
 			}
 
 			if test.kind != tokens[0].Kind {
-				t.Errorf("got %s (literal %s), want %s (literal %s)", tokens[0].Kind, tokens[0].Literal, test.kind, test.input)
+				t.Errorf("got %s (literal %s), want %s", tokens[0].Kind, tokens[0].Literal, test.kind)
 			}
 		})
 	}
