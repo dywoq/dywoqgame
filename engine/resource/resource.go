@@ -1,0 +1,26 @@
+package resource
+
+// Type represents the game engine resource kind.
+type Type string
+
+// A resource kind.
+const (
+	Object Type = "object"
+	Audio  Type = "audio"
+	Sprite Type = "sprite"
+	Room   Type = "room"
+)
+
+// Resource is the game engine resource.
+type Resource interface {
+	// Loads resource into the registry of the engine.
+	// If resource already exists, it returns a error.
+	Load() error
+
+	// Unloads resource from the registry of the engine.
+	// If resource is not loaded, it returns a error.
+	Unload() error
+
+	// Type returns type of resource.
+	Type() Type
+}
