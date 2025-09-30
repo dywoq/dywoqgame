@@ -5,10 +5,10 @@ type Type string
 
 // A resource kind.
 const (
-	Object Type = "object"
-	Audio  Type = "audio"
-	Sprite Type = "sprite"
-	Room   Type = "room"
+	ObjectKind Type = "object"
+	AudioKind  Type = "audio"
+	SpriteKind Type = "sprite"
+	RoomKind   Type = "room"
 )
 
 // Resource is the game engine resource.
