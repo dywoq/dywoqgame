@@ -1,12 +1,13 @@
 package resource
 
-// Type represents the game engine resource kind.
-type Type string
+// Kind represents the game engine resource kind.
+type Kind string
 
 const (
-	Object Type = "object"
-	Audio  Type = "audio"
-	Sprite Type = "sprite"
+	Object Kind = "object"
+	Audio  Kind = "audio"
+	Sprite Kind = "sprite"
+	Room   Kind = "room"
 )
 
 // Resource is the game engine resource.
