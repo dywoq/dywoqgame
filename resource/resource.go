@@ -17,7 +17,7 @@ type Resource interface {
 	Load(m Management) error
 
 	// Unload unloads a resource from the resource management m.
-	Unload(m Management) error
+	Delete(m Management) error
 
 	// Fields returns the fields of the resource
 	// that is present in the registry of the resource manager.
