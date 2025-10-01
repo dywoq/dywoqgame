@@ -1,6 +1,8 @@
 package graphics
 
 import (
+	"fmt"
+
 	"github.com/dywoq/dywoqgame/resource"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
@@ -17,7 +19,11 @@ type Sprite struct {
 }
 
 // NewSprite returns a pointer to Sprite structure.
-func NewSprite(name string, path string) (*Sprite, error) {
+// Returns a error if name is already taken.
+func NewSprite(name string, rm resource.Management, path string) (*Sprite, error) {
+	if rm.Has(name) {
+		return nil, fmt.Errorf("resource named %s already exists", name)
+	}
 	if img, ok := imageCache[path]; ok {
 		return &Sprite{Size: Size{
 			Width:  float32(img.Bounds().Dx()),
@@ -47,7 +53,7 @@ func (s *Sprite) Path() string {
 	return s.path
 }
 
-// Fields returns a fields that come with 
+// Fields returns a fields that come with
 // the loading into the resource manager.
 func (s *Sprite) Fields() map[string]any {
 	fields := make(map[string]any)
@@ -61,7 +67,7 @@ func (s *Sprite) Load(m resource.Management) error {
 	return m.AddResource(s.name, s.Kind(), s.Fields())
 }
 
-// Delete deletes the sprite from the resource manager. 
+// Delete deletes the sprite from the resource manager.
 func (s *Sprite) Delete(m resource.Management) error {
 	return m.DeleteResource(s.name)
 }
