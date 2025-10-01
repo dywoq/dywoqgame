@@ -26,3 +26,35 @@ type Resource interface {
 	// Kind returns a kind of the resource.
 	Kind() Kind
 }
+
+// implementation of Resource interface
+type iResource struct {
+	name   string
+	kind   Kind
+	fields map[string]any
+}
+
+func (i *iResource) Name() string {
+	return i.name
+}
+
+func (i *iResource) Load(m Management) error {
+	return m.AddResource(i.name, i.kind, i.fields)
+}
+
+func (i *iResource) Delete(m Management) error {
+	return m.DeleteResource(i.name)
+}
+
+func (i *iResource) Fields() map[string]any {
+	return i.fields
+}
+
+func (i *iResource) Kind() Kind {
+	return i.kind
+}
+
+// New creates a new resource with given name, kind and fields.
+func New(name string, kind Kind, fields map[string]any) Resource {
+	return &iResource{name: name, kind: kind, fields: fields}
+}

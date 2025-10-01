@@ -58,7 +58,7 @@ func (s *Sprite) Path() string {
 func (s *Sprite) Fields() map[string]any {
 	fields := make(map[string]any)
 	fields["size"] = s.Size
-	fields["native"] = s.Image
+	fields["raw"] = s.Image
 	return fields
 }
 
