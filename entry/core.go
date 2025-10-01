@@ -7,6 +7,7 @@ import (
 	"github.com/dywoq/dywoqgame/graphics"
 	"github.com/dywoq/dywoqgame/resource"
 	"github.com/dywoq/dywoqgame/room"
+	"github.com/hajimehoshi/ebiten/v2"
 )
 
 // Core is a entry point of the game, holding sprites,
@@ -18,6 +19,12 @@ type Core struct {
 	objects resourcesMap[*room.Object]
 	rooms   resourcesMap[*room.Room]
 	running bool
+	game    *ebitenGame
+}
+
+// implementation of ebiten.Game
+type ebitenGame struct {
+	c *Core
 }
 
 type resourceStruct[R resource.Resource] struct {
@@ -48,7 +55,7 @@ func (r resourcesMap[R]) delete(name string) bool {
 // Must be called before the game will be running, otherwise the error will be returned.
 //
 // If the game already has the resource named name, if the fields are not facing the requirements of the interface of fields,
-// AddResource will return a error.
+// or the game is running, AddResource will return a error.
 func (c *Core) AddResource(name string, kind resource.Kind, fields map[string]any) error {
 	if c.running {
 		return errors.New("the game is running")
@@ -59,7 +66,6 @@ func (c *Core) AddResource(name string, kind resource.Kind, fields map[string]an
 	if !c.fieldsHasExpectedInterface(kind, fields) {
 		return errors.New("fields don't have the expected interface")
 	}
-
 	switch kind {
 	case resource.Object:
 		c.objects[name] = resourceStruct[*room.Object]{
@@ -143,6 +149,18 @@ func (c *Core) Has(name string) bool {
 	return false
 }
 
+func (c *Core) Run() error {
+	if c.running {
+		return errors.New("the game is already running")
+	}
+	if c.game == nil {
+		return errors.New("internal c.game is nil")
+	}
+	ebiten.SetWindowTitle(c.Window.Title)
+	c.running = true
+	return ebiten.RunGame(c.game)
+}
+
 func (c *Core) fieldsHasExpectedInterface(kind resource.Kind, fields map[string]any) bool {
 	has := func(expectedFields []string, input map[string]any) bool {
 		for _, expectedField := range expectedFields {
@@ -167,4 +185,17 @@ func (c *Core) fieldsHasExpectedInterface(kind resource.Kind, fields map[string]
 		return has(expectedFields, fields)
 	}
 	return false
+}
+
+func (e *ebitenGame) Update() error {
+	// there's nothing yet
+	return nil
+}
+
+func (e *ebitenGame) Draw(screen *ebiten.Image) {
+	// there's nothing yet
+}
+
+func (e *ebitenGame) Layout(outsideWidth, outsideHeight int) (int, int) {
+	return e.c.Window.Width, e.c.Window.Height
 }
