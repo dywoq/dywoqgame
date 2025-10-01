@@ -2,6 +2,7 @@ package room
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/dywoq/dywoqgame/graphics"
 	"github.com/dywoq/dywoqgame/resource"
@@ -12,17 +13,23 @@ type Object struct {
 	sprite *graphics.Sprite
 }
 
-// NewObject returns a new pointer to Object with the given name and sprite.
-// sprite must be not nil, otherwise, it returns a error.
-func NewObject(name string, sprite *graphics.Sprite) (*Object, error) {
-	if sprite == nil {
-		return nil, errors.New("pointer to graphics.Sprite is nil")
+// NewObject returns a new pointer to Object with the given name and sprite name.
+func NewObject(name string, rm resource.Management, sprite string) (*Object, error) {
+	if rm.Has(name) {
+		return nil, fmt.Errorf("resource named \"%s\" already exists", name)
 	}
-	o := &Object{
-		name:   name,
-		sprite: sprite,
+	s := rm.Get(sprite)
+	if s == nil {
+		return nil, errors.New("got nil, not resource")
 	}
-	return o, nil
+	if s.Kind() != resource.Sprite {
+		return nil, fmt.Errorf("expected a sprite, not %s", s.Kind())
+	}
+	convertedS, ok := s.(*graphics.Sprite)
+	if !ok {
+		return nil, errors.New("not successful converting s into *graphics.Sprite")
+	}
+	return &Object{name: name, sprite: convertedS}, nil
 }
 
 // Name returns a name of the object.
@@ -39,7 +46,7 @@ func (o *Object) Fields() map[string]any {
 }
 
 // Kind returns a kind of object,
-// specifically resource.Object. 
+// specifically resource.Object.
 func (o *Object) Kind() resource.Kind {
 	return resource.Object
 }

@@ -1,6 +1,11 @@
 package room
 
-import "github.com/dywoq/dywoqgame/resource"
+import (
+	"errors"
+	"fmt"
+
+	"github.com/dywoq/dywoqgame/resource"
+)
 
 type Room struct {
 	name    string
@@ -10,8 +15,33 @@ type Room struct {
 
 // NewRoom returns a new pointer to Room with the given name,
 // width, height and initial objects.
-func NewRoom(name string, w, h int, objects []*Object) *Room {
-	return &Room{name: name, objects: objects, w: w, h: h}
+// May return a error if any of objects doesn't exist, the name of room is already taken,
+// or the objects' kind is not resource.Object.
+func NewRoom(name string, rm resource.Management, w, h int, objects []string) (*Room, error) {
+	if rm.Has(name) {
+		return nil, fmt.Errorf("resource named \"%s\" already exists", name)
+	}
+	o := []*Object{}
+	if len(objects) != 0 {
+		for _, obj := range objects {
+			current := rm.Get(obj)
+			if !rm.Has(obj) {
+				return nil, fmt.Errorf("resource named \"%s\" doesn't exist", obj )
+			}
+			
+			if current.Kind() != resource.Object {
+				return nil, fmt.Errorf("expected object, not %s", current.Kind())
+			}
+			
+			convertedObj, ok := current.(*Object)
+			if !ok {
+				return nil, errors.New("didn't convert resource.Resource to room.Object successfully")
+			}
+
+			o = append(o, convertedObj)
+		}
+	}
+	return &Room{name: name, objects: o, w: w, h: h}, nil
 }
 
 // Name returns a name of the room.
