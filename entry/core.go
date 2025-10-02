@@ -10,7 +10,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-// Core is a entry point of the game, holding sprites,
+// Core is an entry point of the game, holding sprites,
 // objects and rooms internally.
 type Core struct {
 	Window Window
@@ -19,12 +19,14 @@ type Core struct {
 	objects resourcesMap[*room.Object]
 	rooms   resourcesMap[*room.Room]
 	running bool
+	debug   bool
 	game    *ebitenGame
 }
 
 // implementation of ebiten.Game
 type ebitenGame struct {
-	c *Core
+	c           *Core
+	initialRoom string
 }
 
 type resourceStruct[R resource.Resource] struct {
@@ -32,6 +34,20 @@ type resourceStruct[R resource.Resource] struct {
 }
 
 type resourcesMap[R resource.Resource] map[string]resourceStruct[R]
+
+// NewCore s
+func NewCore(window Window, debug bool) *Core {
+	c := &Core{
+		Window:  window,
+		sprites: make(resourcesMap[*graphics.Sprite]),
+		objects: make(resourcesMap[*room.Object]),
+		rooms:   make(resourcesMap[*room.Room]),
+		running: false,
+		debug:   debug,
+	}
+	c.game = &ebitenGame{c: c}
+	return c
+}
 
 func (r resourcesMap[R]) has(name string) bool {
 	_, ok := r[name]
@@ -129,9 +145,9 @@ func (c *Core) Get(name string) resource.Resource {
 	if ok {
 		return resource.New(name, resource.Sprite, sprite.fields)
 	}
-	room, ok := c.rooms.get(name)
+	roomGet, ok := c.rooms.get(name)
 	if ok {
-		return resource.New(name, resource.Room, room.fields)
+		return resource.New(name, resource.Room, roomGet.fields)
 	}
 	return nil
 }
@@ -149,14 +165,23 @@ func (c *Core) Has(name string) bool {
 	return false
 }
 
-func (c *Core) Run() error {
+func (c *Core) Run(initialRoom string) error {
 	if c.running {
 		return errors.New("the game is already running")
 	}
 	if c.game == nil {
 		return errors.New("internal c.game is nil")
 	}
+	if !c.Has(initialRoom) {
+		return fmt.Errorf("can't find room \"%s\"", initialRoom)
+	}
+
 	ebiten.SetWindowTitle(c.Window.Title)
+	if c.Window.Resizing {
+		ebiten.SetWindowResizingMode(ebiten.WindowResizingModeEnabled)
+	}
+
+	c.game.initialRoom = initialRoom
 	c.running = true
 	return ebiten.RunGame(c.game)
 }
@@ -188,6 +213,9 @@ func (c *Core) fieldsHasExpectedInterface(kind resource.Kind, fields map[string]
 }
 
 func (e *ebitenGame) Update() error {
+	if e.c.debug {
+		debug(e.c, "the current room: ", e.initialRoom, "\n")
+	}
 	// there's nothing yet
 	return nil
 }

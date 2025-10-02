@@ -43,7 +43,7 @@ func NewSprite(name string, rm resource.Management, path string) (*Sprite, error
 	}, Image: img, name: name, path: path}, nil
 }
 
-// Sprite returns a name of the sprite.
+// Name returns a name of the sprite.
 func (s *Sprite) Name() string {
 	return s.name
 }

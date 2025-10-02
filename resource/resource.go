@@ -16,7 +16,7 @@ type Resource interface {
 	// Load loads a resource into the resource management m.
 	Load(m Management) error
 
-	// Unload unloads a resource from the resource management m.
+	// Delete deletes a resource from the resource management m.
 	Delete(m Management) error
 
 	// Fields returns the fields of the resource
