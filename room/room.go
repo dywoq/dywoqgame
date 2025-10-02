@@ -39,7 +39,7 @@ func (m *Manager) Register(r Changeable) {
 }
 
 // Set sets the current room to room.
-// Returns a error if room wasn't found.
+// Returns an error if room wasn't found.
 func (m *Manager) Set(room string) error {
 	val, ok := m.rooms[room]
 	if !ok {
