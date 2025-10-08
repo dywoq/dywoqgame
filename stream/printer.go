@@ -53,19 +53,19 @@ func (p *Printer) Index(i int) error {
 	return nil
 }
 
-// NoLine is equal to:
+// Print is equal to:
 //
 //	p.Index(p.s.Len() - 1)
-func (p *Printer) NoLine() error {
+func (p *Printer) Print() error {
 	return p.Index(p.s.Len() - 1)
 }
 
-// Line is equal to:
+// Println is equal to:
 //
 //	p.Print()
 //	os.Stdout.WriteString("\n")
-func (p *Printer) Line() error {
-	err := p.NoLine()
+func (p *Printer) Println() error {
+	err := p.Print()
 	if err != nil {
 		return err
 	}
