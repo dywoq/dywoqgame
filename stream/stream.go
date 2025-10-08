@@ -9,7 +9,7 @@ import (
 // The stream's messages are printed only once.
 type Stream struct {
 	maxLen int
-	buf    []message
+	buf    []*message
 }
 
 type message struct {
@@ -20,9 +20,9 @@ type message struct {
 var ErrFull = errors.New("stream is full")
 var ErrOutOfBounds = errors.New("out of bounds")
 
-// New returns a pointer to Stream with maxLen.
-func New(maxLen int) *Stream {
-	return &Stream{maxLen: maxLen, buf: make([]message, 0, maxLen)}
+// NewStream returns a pointer to Stream with maxLen.
+func NewStream(maxLen int) *Stream {
+	return &Stream{maxLen: maxLen, buf: make([]*message, 0, maxLen)}
 }
 
 // Write writes a message in bytes.
@@ -31,7 +31,7 @@ func (s *Stream) Write(p []byte) (int, error) {
 	if len(s.buf) >= s.maxLen {
 		return 0, ErrFull
 	}
-	s.buf = append(s.buf, message{p, false})
+	s.buf = append(s.buf, &message{p, false})
 	return len(p), nil
 }
 
