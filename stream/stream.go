@@ -70,3 +70,13 @@ func (s *Stream) MarkPrinted(i int) error {
 	s.buf[i].printed = true
 	return nil
 }
+
+// Clears clears the stream buffer.
+func (s *Stream) Clear() {
+	s.buf = s.buf[:0]
+}
+
+// Flush sets nil to the underlying stream buffer.
+func (s *Stream) Flush() {
+	s.buf = nil
+}
