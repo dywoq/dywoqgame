@@ -2,6 +2,7 @@
 package room
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -51,10 +52,16 @@ func (m *Manager) Set(room string) error {
 
 // Update calls the room's Update method.
 func (m *Manager) Update() error {
+	if m.current == nil {
+		return errors.New("current room is nil")
+	}
 	return m.current.Update()
 }
 
 // Draw draws the room's Draw method.
 func (m *Manager) Draw(screen *ebiten.Image) {
+	if m.current == nil {
+		return 
+	}
 	m.current.Draw(screen)
 }
