@@ -12,9 +12,9 @@ type CanCollide[T any] interface {
 }
 
 type Rect struct {
-	X     float32 `json:"x,omitempty"`
-	Y     float32
-	Width float32 `json:"width,omitempty"`
+	X      float32 `json:"x,omitempty"`
+	Y      float32 `json:"y,omitempty"`
+	Width  float32 `json:"width,omitempty"`
 	Height float32 `json:"height,omitempty"`
 }
 
@@ -29,7 +29,8 @@ func (r *Rect) Collides(other *Rect) bool {
 }
 
 type Circle struct {
-	X, Y   float32 `json:"x,omitempty"`
+	X      float32 `json:"x,omitempty"`
+	Y      float32 `json:"y,omitempty"`
 	Radius float32 `json:"radius,omitempty"`
 }
 
@@ -44,9 +45,10 @@ func (c *Circle) Collides(other *Circle) bool {
 }
 
 type Image struct {
-	Image *ebiten.Image
-	X, Y  int
-	mask  [][]bool
+	Image *ebiten.Image `json:"image"`
+	X     int           `json:"x"`
+	Y     int           `json:"y"`
+	mask  [][]bool      `json:"mask"`
 }
 
 // GenerateMask converts the image into a bool mask (true = opaque).
