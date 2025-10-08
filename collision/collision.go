@@ -12,8 +12,10 @@ type CanCollide[T any] interface {
 }
 
 type Rect struct {
-	X, Y          float32 `json:"x,omitempty"`
-	Width, Height float32 `json:"width,omitempty"`
+	X     float32 `json:"x,omitempty"`
+	Y     float32
+	Width float32 `json:"width,omitempty"`
+	Height float32 `json:"height,omitempty"`
 }
 
 func (r *Rect) Collides(other *Rect) bool {
@@ -51,9 +53,9 @@ type Image struct {
 func (img *Image) GenerateMask() {
 	w, h := img.Image.Bounds().Dx(), img.Image.Bounds().Dy()
 	img.mask = make([][]bool, h)
-	for y := 0; y < h; y++ {
+	for y := range h {
 		img.mask[y] = make([]bool, w)
-		for x := 0; x < w; x++ {
+		for x := range w {
 			_, _, _, a := img.Image.At(x, y).RGBA()
 			img.mask[y][x] = a != 0
 		}
