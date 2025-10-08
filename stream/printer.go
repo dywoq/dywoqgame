@@ -46,24 +46,26 @@ func (p *Printer) Index(i int) error {
 	case p.Printed():
 		return nil
 	}
-	os.Stdout.Write(p.s.buf[i].bytes)
-	p.s.buf[i].printed = true
+	if !p.s.buf[i].printed {
+		os.Stdout.Write(p.s.buf[i].bytes)
+		p.s.buf[i].printed = true
+	}
 	return nil
 }
 
-// Print is equal to:
+// NoLine is equal to:
 //
 //	p.Index(p.s.Len() - 1)
-func (p *Printer) Print() error {
+func (p *Printer) NoLine() error {
 	return p.Index(p.s.Len() - 1)
 }
 
-// Println is equal to:
+// Line is equal to:
 //
-//	p.Index(0)
+//	p.Print()
 //	os.Stdout.WriteString("\n")
-func (p *Printer) Println() error {
-	err := p.Index(0)
+func (p *Printer) Line() error {
+	err := p.NoLine()
 	if err != nil {
 		return err
 	}
