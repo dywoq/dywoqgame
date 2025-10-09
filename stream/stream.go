@@ -126,8 +126,3 @@ func (w *Writer) Println() error {
 func (w *Writer) SetOutput(out io.Writer) {
 	w.w = out
 }
-
-func s() {
-	s := NewStream(10)
-	io.Writer.Write(s, []byte(string("Hi!")))
-}
