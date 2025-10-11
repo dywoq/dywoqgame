@@ -3,6 +3,7 @@ package stream
 import (
 	"errors"
 	"io"
+	"os"
 )
 
 // Stream is a structure for containing the messages temporarily, with the maximum length.
@@ -87,9 +88,23 @@ func (s *Stream) Clear() {
 }
 
 // Close sets nil to the underlying stream buffer.
-func (s *Stream) Close() error { 
+func (s *Stream) Close() error {
 	s.buf = nil
 	return nil
+}
+
+// Written returns true if all messages from the buffer are written.
+// If the buffer is empty, it returns false.
+func (s *Stream) Written() bool {
+	if s.Empty() {
+		return false
+	}
+	for _, msg := range s.buf {
+		if !msg.written {
+			return false
+		}
+	}
+	return true
 }
 
 // Println writes the message to the set writer without newline.
@@ -114,15 +129,59 @@ func (w *Writer) Print() error {
 //
 // Does nothing if the buffer is empty.
 func (w *Writer) Println() error {
-	err := w.Print()
+	if w.s == nil || len(w.s.buf) == 0 {
+		return nil
+	}
+	m := w.s.buf[len(w.s.buf)-1]
+	if m.written {
+		return nil
+	}
+	_, err := w.w.Write(m.bytes)
 	if err != nil {
 		return err
 	}
-	_, err = w.w.Write([]byte(string('\n')))
+	m.written = true
+	_, err = w.w.Write([]byte{'\n'})
 	return err
 }
 
 // SetOutput sets out to the underlying writer.
 func (w *Writer) SetOutput(out io.Writer) {
 	w.w = out
+}
+
+// Print is equal to:
+//
+//	w := NewWriter(os.Stdout, s)
+//	w.Print()
+func Print(s *Stream) error {
+	w := NewWriter(os.Stdout, s)
+	return w.Print()
+}
+
+// Print is equal to:
+//
+//	w := NewWriter(os.Stdout, s)
+//	w.Println()
+func Println(s *Stream) error {
+	w := NewWriter(os.Stdout, s)
+	return w.Println()
+}
+
+// Error is equal to:
+//
+//	w := NewWriter(os.Stderr, s)
+//	w.Print()
+func Error(s *Stream) error {
+	w := NewWriter(os.Stderr, s)
+	return w.Println()
+}
+
+// Errorln is equal to:
+//
+//	w := NewWriter(os.Stderr, s)
+//	w.Println()
+func Errorln(s *Stream) error {
+	w := NewWriter(os.Stderr, s)
+	return w.Println()
 }
