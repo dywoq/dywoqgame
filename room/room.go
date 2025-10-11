@@ -61,7 +61,12 @@ func (m *Manager) Update() error {
 // Draw draws the room's Draw method.
 func (m *Manager) Draw(screen *ebiten.Image) {
 	if m.current == nil {
-		return 
+		return
 	}
 	m.current.Draw(screen)
+}
+
+// Rooms returns a map of rooms.
+func (m *Manager) Rooms() map[string]Changeable {
+	return m.rooms
 }
