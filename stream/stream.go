@@ -26,7 +26,7 @@ type message struct {
 	written bool
 }
 
-var ErrOutOfBounds = errors.New("out of bounds")
+var ErrOutOfBounds = errors.New("stream: out of bounds")
 
 // NewStream returns a pointer to Stream with maxLen.
 func NewStream(maxLen int) *Stream {
