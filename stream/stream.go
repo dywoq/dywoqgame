@@ -26,7 +26,6 @@ type message struct {
 	written bool
 }
 
-var ErrFull = errors.New("stream is full")
 var ErrOutOfBounds = errors.New("out of bounds")
 
 // NewStream returns a pointer to Stream with maxLen.
@@ -40,10 +39,10 @@ func NewWriter(w io.Writer, s *Stream) *Writer {
 }
 
 // Write writes a message in bytes.
-// Returns ErrFull if the buffer is overflowed (in other words, reached the max length).
+// If the buffer is over s.maxLen, the write methods removes the older message.
 func (s *Stream) Write(p []byte) (int, error) {
 	if len(s.buf) >= s.maxLen {
-		return 0, ErrFull
+		s.buf = s.buf[1:]
 	}
 	data := make([]byte, len(p))
 	copy(data, p)
