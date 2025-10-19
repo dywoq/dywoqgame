@@ -106,40 +106,33 @@ func (s *Stream) Written() bool {
 	return true
 }
 
-// Println writes the message to the set writer without newline.
-// only if it wasn't written already.
-//
-// Does nothing if the buffer is empty.
+// Print writes the first unwritten message to the set writer without a newline.
+// It marks the message as written upon success.
+// Returns true if a message was written, false otherwise.
 func (w *Writer) Print() error {
-	if w.s == nil || len(w.s.buf) == 0 {
+	if w.s == nil || w.s.Empty() {
 		return nil
 	}
-	m := w.s.buf[len(w.s.buf)-1]
-	if m.written {
-		return nil
+	for i, m := range w.s.buf {
+		if !m.written {
+			_, err := w.w.Write(m.bytes)
+			if err != nil {
+				return err
+			}
+			w.s.buf[i].written = true
+			return nil
+		}
 	}
-	_, err := w.w.Write(m.bytes)
-	m.written = true
-	return err
+	return nil
 }
 
-// Println writes the message to the set writer with newline.
-// only if it wasn't written already.
-//
-// Does nothing if the buffer is empty.
+// Println writes the first unwritten message to the set writer with a newline.
+// It uses Print() for the main message writing.
 func (w *Writer) Println() error {
-	if w.s == nil || len(w.s.buf) == 0 {
-		return nil
-	}
-	m := w.s.buf[len(w.s.buf)-1]
-	if m.written {
-		return nil
-	}
-	_, err := w.w.Write(m.bytes)
+	err := w.Print()
 	if err != nil {
 		return err
 	}
-	m.written = true
 	_, err = w.w.Write([]byte{'\n'})
 	return err
 }
@@ -173,7 +166,7 @@ func Println(s *Stream) error {
 //	w.Print()
 func Error(s *Stream) error {
 	w := NewWriter(os.Stderr, s)
-	return w.Println()
+	return w.Print()
 }
 
 // Errorln is equal to:
