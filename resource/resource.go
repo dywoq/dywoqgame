@@ -17,6 +17,10 @@ type Resource interface {
 
 	// Kind returns the kind of the resource.
 	Kind() Kind
+
+	// Free frees the resource.
+	// This is called by the resource manager.
+	Free() error
 }
 
 type Management interface {
