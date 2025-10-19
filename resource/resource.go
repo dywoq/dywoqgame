@@ -61,5 +61,5 @@ func ErrNotFound(name string) error {
 }
 
 func ErrExpected(name string, expected, got Kind) error {
-	return fmt.Errorf("resource: \"%s\", expected kind %v, got %v", expected, got)
+	return fmt.Errorf("resource: \"%s\", expected kind %v, got %v", name, expected, got)
 }
