@@ -74,7 +74,7 @@ func contractCheck(r resource.Resource) error {
 					if field.name == key {
 						got := reflect.TypeOf(value).String()
 						if got != field.tType {
-							return fmt.Errorf("resource")
+							return fmt.Errorf("entry: got %s, expected %s in field %s", got, field.tType, field.name)
 						}
 					}
 				}
