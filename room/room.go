@@ -44,7 +44,7 @@ func (m *Manager) Register(r Changeable) {
 func (m *Manager) Set(room string) error {
 	val, ok := m.rooms[room]
 	if !ok {
-		return fmt.Errorf("can't find %s room", room)
+		return fmt.Errorf("room: can't find %s room", room)
 	}
 	m.current = val
 	return nil
@@ -53,7 +53,7 @@ func (m *Manager) Set(room string) error {
 // Update calls the room's Update method.
 func (m *Manager) Update() error {
 	if m.current == nil {
-		return errors.New("current room is nil")
+		return errors.New("room: current room is nil")
 	}
 	return m.current.Update()
 }
