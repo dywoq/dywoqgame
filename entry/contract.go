@@ -66,21 +66,31 @@ func contractHasDoubles() bool {
 
 func contractCheck(r resource.Resource) error {
 	kind := r.Kind()
-	for _, contract := range contracts {
-		if contract.kind == kind {
-			t := r.Table()
-			for key, value := range t {
-				for _, field := range contract.fields {
-					if field.name == key {
-						got := reflect.TypeOf(value).String()
-						if got != field.tType {
-							return fmt.Errorf("entry: got %s, expected %s in field %s", got, field.tType, field.name)
-						}
-					}
-				}
-			}
-			return nil
+	var matchingContract *contract
+	for _, c := range contracts {
+		if c.kind == kind {
+			matchingContract = c
+			break
 		}
 	}
-	return fmt.Errorf("entry: didn't find matching contract for the resource with \"%v\"", r.Kind)
+	if matchingContract == nil {
+		return fmt.Errorf("entry: didn't find matching contract for the resource with kind \"%v\"", kind)
+	}
+	requiredFields := make(map[string]string, len(matchingContract.fields))
+	for _, field := range matchingContract.fields {
+		requiredFields[field.name] = field.tType
+	}
+
+	t := r.Table()
+	for key, value := range t {
+		expectedType, ok := requiredFields[key]
+		if !ok {
+			continue
+		}
+		got := reflect.TypeOf(value).String()
+		if got != expectedType {
+			return fmt.Errorf("entry: field '%s': got type %s, expected %s", key, got, expectedType)
+		}
+	}
+	return nil
 }

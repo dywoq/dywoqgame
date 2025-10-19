@@ -19,7 +19,7 @@ type Resource interface {
 	Kind() Kind
 
 	// Free frees the resource.
-	// This is called by the resource manager.
+	// This is called by the resource manager when unloading resource.
 	Free() error
 }
 
@@ -46,8 +46,9 @@ type Management interface {
 
 // A resource kind.
 const (
-	Sprite Kind = "sprite"
-	Object Kind = "object"
+	Sprite  Kind = "sprite"
+	Object  Kind = "object"
+	Unknown Kind = "unknown"
 )
 
 func ErrExists(name string) error {
