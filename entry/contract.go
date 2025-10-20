@@ -45,7 +45,7 @@ func contractsInit() {
 	contracts = append(contracts, objectContract)
 
 	if contractHasDoubles() {
-		panic("entry: contracts can't share the same kind")
+		panic("contracts can't share the same kind")
 	}
 }
 
