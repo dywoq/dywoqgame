@@ -4,19 +4,21 @@ import (
 	"github.com/dywoq/dywoqgame/resource"
 )
 
-type resourceManager struct {
+// ResourceManager is a standard resource manager,
+// implementing interface resource.Management.
+type ResourceManager struct {
 	res map[string]resource.Resource
 }
 
 // Exists checks if the resource named name exists.
-func (r *resourceManager) Exists(name string) bool {
+func (r *ResourceManager) Exists(name string) bool {
 	_, ok := r.res[name]
 	return ok
 }
 
 // TableOf returns the metadata table of the resource named name.
 // If there's no called resource, it returns resource.ErrNotFound.
-func (r *resourceManager) TableOf(name string) (resource.Table, error) {
+func (r *ResourceManager) TableOf(name string) (resource.Table, error) {
 	res, ok := r.res[name]
 	if !ok {
 		return nil, resource.ErrNotFound(name)
@@ -29,7 +31,7 @@ func (r *resourceManager) TableOf(name string) (resource.Table, error) {
 //
 // Returns an error if the metadata table of the resource fails to comply
 // with contracts.
-func (r *resourceManager) Load(res resource.Resource) error {
+func (r *ResourceManager) Load(res resource.Resource) error {
 	if r.Exists(res.Name()) {
 		return resource.ErrExists(res.Name())
 	}
@@ -45,7 +47,7 @@ func (r *resourceManager) Load(res resource.Resource) error {
 // calling resource.Resource.Free method.
 //
 // Returns resource.ErrNotFound if there's no resource with the name.
-func (r *resourceManager) Unload(res resource.Resource) error {
+func (r *ResourceManager) Unload(res resource.Resource) error {
 	got, ok := r.res[res.Name()]
 	if !ok {
 		return resource.ErrNotFound(res.Name())
@@ -61,7 +63,7 @@ func (r *resourceManager) Unload(res resource.Resource) error {
 // KindOf returns the kind of the resource.
 // Return resource.Unknown adn resource.ErrNotFound
 // if there's no resource called name.
-func (r *resourceManager) KindOf(name string) (resource.Kind, error) {
+func (r *ResourceManager) KindOf(name string) (resource.Kind, error) {
 	got, ok := r.res[name]
 	if !ok {
 		return resource.Unknown, resource.ErrNotFound(name)
